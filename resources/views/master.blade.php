@@ -4,6 +4,7 @@
 <html lang="en">
 <head>
 
+<meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ecom project</title>
@@ -28,5 +29,20 @@
        height:500px;
        padding-top:100px; 
     }
+    img.slider-img
+    {
+        height:400px;
+
+    }
+    .custom-product{
+       height:600px;
+       
+    }
+
+    .slider-text{
+        background-color: #24465454;
+
+    }
+
     </style>
 </html>
