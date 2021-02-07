@@ -9,14 +9,18 @@
 			    <h1 class="text-center">E-Com </h1>
 			    <div class="row">
                 <div class="col-xs-6 col-sm-3">
-							<select id="selectbox1">
-                            <option value="">Category</option>
-							    <option value="mobile">Mobile</option>
-							    <option value="wm">Washing Machine</option>
+				<form action="/productCat" method="Post">
+				{{csrf_field()}}
+					<select name="ct">
+                            <option value="" >Category</option>
+							 <option value="mobile">Mobile</option> 
+							    <option value="washing machine">Washing Machine</option>
 							    <option value="watch">Watch</option>
 							    <option value="tv">Tv</option>
 							    <option value="printer">printer</option>
+								
 							</select>
+					
 					    </div>
 					    
 				
@@ -24,16 +28,18 @@
 						<div class="row">
 	
 							<div class="col-sm-4 pull-right">
-								<select id="selectbox3">
+								<select name="pr">
 								    <option value="">Sort By Price</option>
-								    <option value="aye">Low to High</option>
-								    <option value="eh">High to Low</option>
+								    <option value="asc">Low to High</option>
+								    <option value="desc">High to Low</option>
 								    
 								</select>
 							</div>
 							
 						</div>	
 					</div>
+					<input type="submit" value="Submit">
+				</form>
 			    </div>
 		    	<div class="row top25">
                 @foreach($products as $item)

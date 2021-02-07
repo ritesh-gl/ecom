@@ -132,12 +132,35 @@ class ProductController extends Controller
 
     function proCat(Request $req)
     {
-        $cat=$req->cat;
+        $cat=$req->ct;
+        $price=$req->pr;
+        // echo $price;
+        // echo $cat;
+        if($cat=="" && $price=="")
+        {
+            $data= Product::
+            all();
+        }
+        else if($cat=="" && $price!="")
+        {
+            $data= Product::
+            orderBy('price',$price)->get() ;
+        }
+
+       else if($price=="" && $cat!="")
+        { 
+            $data= Product::
+            where('category','like',$cat)->get() ;
+        }
+        else
+        {
         $data= Product::
-       where('category','like',$cat)->get() ;
-       return view('allProduct',['products'=>$data]);
+        where('category','like',$cat)->orderBy('price',$price)->get() ;
+        }
+      return view('allProduct',['products'=>$data]);
 
     }
 
+  
 
 }

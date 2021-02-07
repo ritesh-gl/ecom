@@ -32,4 +32,4 @@ Route::post("orderPlace","ProductController@orderPlace");
 Route::get("myOrders","ProductController@myOrders");
 //Route::view('products','allProduct');
 Route::get("products","ProductController@allProduct");
-Route::get("products/{cat}","ProductController@proCat");
+Route::post("productCat","ProductController@proCat");
