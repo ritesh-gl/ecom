@@ -25,15 +25,17 @@
       </tr>
     </tbody>
   </table>
-  <form >
+  <form action="/orderPlace" method="post" >
+  {{ csrf_field() }}
+
   <div class="form-group">
-    <textarea  class="form-control" ></textarea>
+    <textarea name="address" class="form-control" placeholder="Enter your Address" ></textarea>
   </div>
   <div class="form-group">
   <label for="">Payment Method </label>
-  <p><input type="radio"  name="payment"><span>Online Payment</span></p>
-  <p><input type="radio"  name="payment"><span>EMI</span></p>
-  <p><input type="radio"  name="payment"><span>COD</span></p>
+  <p><input type="radio" value="cash" name="payment"><span>Online Payment</span></p>
+  <p><input type="radio" value="cash" name="payment"><span>EMI</span></p>
+  <p><input type="radio" value="cash" name="payment"><span>COD</span></p>
 
   
   </div>

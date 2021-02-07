@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 use App\cart;
+use App\orders;
+
 use Session;
 use Illuminate\Support\Facades\DB;
 
@@ -88,5 +90,54 @@ class ProductController extends Controller
     return view('ordernow',['total'=>$total]);
 
     }
+
+    function orderPlace(Request $req)
+    {
+        $userId=Session::get('user')['id'];
+        $allcart=cart::where('user_id',$userId)->get();
+        foreach($allcart as $cart)
+        {
+            $order=new orders;
+            $order->product_id=$cart['product_id'];
+            $order->user_id=$cart['user_id'];
+            $order->status="pending";
+            $order->payment_method=$req->payment;
+            $order->payment_status="pending";
+            $order->payment_method=$req->payment;
+            $order->address=$req->address;
+            $order->save();
+            $allcart=cart::where('user_id',$userId)->delete();
+
+        }
+        $req->input();
+        return redirect('/');      
+    }
+
+    function myOrders()
+    {
+        $userId=Session::get('user')['id'];
+        $orders= DB::table('orders')
+        ->join('products','orders.product_id','=','products.id')
+        ->where('orders.user_id',$userId)
+        ->get();
+ 
+     return view('myorders',['orders'=>$orders]); 
+    }
+
+    function allProduct()
+    {
+        $data=Product::all();
+        return view('allProduct',['products'=>$data]);
+    }
+
+    function proCat(Request $req)
+    {
+        $cat=$req->cat;
+        $data= Product::
+       where('category','like',$cat)->get() ;
+       return view('allProduct',['products'=>$data]);
+
+    }
+
 
 }

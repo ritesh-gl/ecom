@@ -37,27 +37,45 @@
     <span class="sr-only">Next</span>
   </a>
 </div>
-<div class="trending-wrapper">
-<h1>Trending Products</h1>
-<div class="">
-   @foreach($products as $item)
-   <div class="trending-item">
-   <a href="detail/{{$item['id']}}">  
+
+
+    <div class="trending-wrapper">
+    <div align="right" class="trending-wrapper">
+        <h1><a href="products" >All Products </a></h1>
+
+        
+    </div>
+        <h1>Trending Products</h1>
+        
+
+        <div class="">
+        @foreach($products as $item)
+        <?php if($item['id']>=2 && $item['id']<=6)
+        {
+             ?>
+         <div class="trending-item">
+
+         <a href="detail/{{$item['id']}}">  
 
           <img class="trending-img" src="{{$item['gallery']}}" >
+
 
       <div class="">
         <h3>{{$item['name']}}</h3>
       </div>
       </a>
+        </div>
+        <?php } ?>
+        
+     @endforeach
+     </div>
     </div>
-    @endforeach
-  </div>
-</div>
+
+    
 
 
 
 
-</div>
+    </div>
 
  @endsection

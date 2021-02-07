@@ -76,8 +76,17 @@
 
     }
 
+    .greyBg{ margin-top:20px}
 
+    .list option{
+        margin-top: 10px
+    }
 
+    img.slider-img1
+    {
+        height: 200px !important;
+
+    }
 
     </style>
     </body>
