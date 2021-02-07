@@ -5,11 +5,14 @@
 	<div class="greyBg">
 	    <div class="container">
 			<div class="wrapper">
-				
+
 			    <h1 class="text-center">E-Com </h1>
+			
+
 			    <div class="row">
                 <div class="col-xs-6 col-sm-3">
-				<form action="/productCat" method="Post">
+
+				<form action="/productCat" method="get">
 				{{csrf_field()}}
 					<select name="ct">
                             <option value="" >Category</option>
@@ -38,10 +41,12 @@
 							
 						</div>	
 					</div>
-					<input type="submit" value="Submit">
+					<input type="submit" value="Submit" class="btn btn-success">
 				</form>
 			    </div>
+				{{$products->links()}}
 		    	<div class="row top25">
+			
                 @foreach($products as $item)
 	
                     <div class="col-xs-6 col-sm-4">
@@ -61,6 +66,7 @@
 		    		</div>
 		    		@endforeach
                    </div>
+				   {{$products->links()}}
 		    	</div>
 			</div>
 		</div>		

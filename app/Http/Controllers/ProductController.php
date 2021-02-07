@@ -113,6 +113,8 @@ class ProductController extends Controller
         return redirect('/');      
     }
 
+    
+
     function myOrders()
     {
         $userId=Session::get('user')['id'];
@@ -124,11 +126,7 @@ class ProductController extends Controller
      return view('myorders',['orders'=>$orders]); 
     }
 
-    function allProduct()
-    {
-        $data=Product::all();
-        return view('allProduct',['products'=>$data]);
-    }
+
 
     function proCat(Request $req)
     {
@@ -139,23 +137,23 @@ class ProductController extends Controller
         if($cat=="" && $price=="")
         {
             $data= Product::
-            all();
+            paginate(6);
         }
         else if($cat=="" && $price!="")
         {
             $data= Product::
-            orderBy('price',$price)->get() ;
+            orderBy('price',$price)->paginate(6);
         }
 
        else if($price=="" && $cat!="")
         { 
             $data= Product::
-            where('category','like',$cat)->get() ;
+            where('category','like',$cat)->paginate(6) ;
         }
         else
         {
         $data= Product::
-        where('category','like',$cat)->orderBy('price',$price)->get() ;
+        where('category','like',$cat)->orderBy('price',$price)->paginate(6) ;
         }
       return view('allProduct',['products'=>$data]);
 

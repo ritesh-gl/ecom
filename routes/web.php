@@ -31,5 +31,5 @@ Route::get("orderNow","ProductController@orderNow");
 Route::post("orderPlace","ProductController@orderPlace");
 Route::get("myOrders","ProductController@myOrders");
 //Route::view('products','allProduct');
-Route::get("products","ProductController@allProduct");
-Route::post("productCat","ProductController@proCat");
+Route::get("products","ProductController@proCat");
+Route::get("productCat","ProductController@proCat");
