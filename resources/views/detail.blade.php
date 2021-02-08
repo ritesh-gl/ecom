@@ -20,6 +20,34 @@
         
         <input type="hidden" name="product_id" value="{{$products['id']}}">
         {{ csrf_field() }}
+        <script>
+  $(document).ready(function(){
+        //var counter = $('#TextBox').val();
+        $('#add').click( function() {
+            var counter = $('#TextBox').val();
+            counter++ ;
+            $('#TextBox').val(counter);
+    });
+    $('#rem').click( function() {
+            var counter = $('#TextBox').val();
+            if(counter==1)
+            {
+              $('#TextBox').val(0);
+            }
+            else
+            counter-- ;
+
+            $('#TextBox').val(counter);
+    });
+});
+     </script>
+   
+      
+     <div class="col-sm-4">
+     <input type="button" value="-"   id="rem">
+     <input type="text" size=2 name="quant" id="TextBox" value="1" />
+     <input type="button"  value="+"   id="add">
+     </div>
         <button class="btn btn-success">Add to Cart</button>
 
         </form>

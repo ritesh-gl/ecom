@@ -26,15 +26,20 @@
       </div>
    
      </div>
+    
      <div class="col-sm-4">
-     <a href='/removeCart/{{$item->cart_id}}' class="btn btn-warning">Remove From Cart </a>
-        
-   
+Quantity : 
+     {{$item->cart_quantity}}
+
+     </div>
+     
+     <div class="col-sm-4">
+     <a href='/removeCart/{{$item->cart_id}}' size=3 class="btn btn-warning">Remove From Cart </a>
     </div>
+    
     </div>
     @endforeach
     <a class="btn btn-success" href="/orderNow">Order Now </a><br><br>
-
   </div>
 </div>
 

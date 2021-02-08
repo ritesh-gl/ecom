@@ -21,6 +21,7 @@
         
       <div class="">
         <h2>Name :{{$item->name}}</h2>
+        <h5>Quantity :{{$item->order_quantity}}</h5>
         <h5>Description :{{$item->description}}</h5>
         <h5>Delivery Status :{{$item->status}}</h5>
         <h5>Address :{{$item->address}}</h5>

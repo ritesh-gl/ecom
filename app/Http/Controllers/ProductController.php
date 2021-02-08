@@ -39,12 +39,23 @@ class ProductController extends Controller
     function addToCart(Request $req)
     {
        if($req->session()->has('user'))
-       {
-           $cart=new cart;
+       { 
+        $data=Product::find($req->product_id);
+        $leftq= $data['quantity']-$req->quant;
+
+        if($leftq>=0)
+        {
+        $cart=new cart;
            $cart->user_id=$req->session()->get('user')['id'];
            $cart->product_id=$req->product_id;
+           $cart->cart_quantity=$req->quant;
             $cart->save();
+
             return redirect('/');
+        }
+        else {
+            echo '<script>alert("Not Enough Item in stock.\n Only '.$data['quantity'].' left.")</script>';
+            return view('detail',['products'=>$data]);        }
        }
 
        else
@@ -66,8 +77,11 @@ class ProductController extends Controller
        $products=DB::table('cart')
        ->join('products','cart.product_id','=','products.id')
        ->where('cart.user_id',$userId)
-    ->select('products.*','cart.id as cart_id')
+    ->select('products.*','cart.*','cart.id as cart_id')
     ->get();
+
+    
+    
 
     return view('cartList',['products'=>$products]);
 
@@ -95,6 +109,26 @@ class ProductController extends Controller
     {
         $userId=Session::get('user')['id'];
         $allcart=cart::where('user_id',$userId)->get();
+        $products=DB::table('cart')
+        ->join('products','cart.product_id','=','products.id')
+        ->where('cart.user_id',$userId)
+     ->select('products.*','cart.*','cart.id as cart_id')
+     ->get();
+     
+      foreach ($products as $item)
+      {
+          
+        $leftqn=$item->quantity-$item->cart_quantity;
+        //echo $item->quantity;
+
+        DB::table('products')
+        ->where('id', $item->product_id)  // find your user by their email
+        ->limit(1)  // optional - to ensure only one record is updated.
+        ->update(array('quantity' => $leftqn));  // update the record in the DB.
+       
+             
+    }
+    
         foreach($allcart as $cart)
         {
             $order=new orders;
@@ -105,8 +139,13 @@ class ProductController extends Controller
             $order->payment_status="pending";
             $order->payment_method=$req->payment;
             $order->address=$req->address;
+            $order->order_quantity=$cart['cart_quantity'];
             $order->save();
-            $allcart=cart::where('user_id',$userId)->delete();
+            $allcart= DB::table('cart')
+            ->orderBy('id')
+            ->limit(1)
+            ->delete();
+           // $allcart=cart::where('user_id',$userId)->delete();
 
         }
         $req->input();
@@ -122,11 +161,18 @@ class ProductController extends Controller
         ->join('products','orders.product_id','=','products.id')
         ->where('orders.user_id',$userId)
         ->get();
- 
+       // $quant=cart::where('user_id',$userId)->get();
      return view('myorders',['orders'=>$orders]); 
     }
 
 
+    function allProduct()
+    {
+        $data= Product::
+            paginate(6);
+        return view('allProduct',['products'=>$data]);
+
+    }
 
     function proCat(Request $req)
     {

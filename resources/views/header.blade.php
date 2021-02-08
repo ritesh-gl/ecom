@@ -34,6 +34,7 @@ $total=ProductController::cartItem();
         <button type="submit" class="btn btn-default">Search</button>
       </form>
       <ul class="nav navbar-nav navbar-right">
+      <li><a href="/products" >All Products </a></li>
         <li><a href="/cartList">Cart({{$total}})</a></li>
         @if(Session::has('user'))
         <li class="dropdown">
