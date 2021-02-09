@@ -35,16 +35,10 @@
 <!--===============================================================================================-->	
 	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor1/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor1/animate/animate.css">
 <!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="vendor1/css-hamburgers/hamburgers.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor1/select2/select2.min.css">
-<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 <!--===============================================================================================-->
@@ -90,7 +84,7 @@
 					
 
 					<div class="text-center p-t-136">
-						<a class="txt2" href="signup1.html">
+						<a class="txt2" href="/register">
 							<h4>Create your Account</h4>
 							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
 						</a>
@@ -102,14 +96,6 @@
 	
 	
 
-	
-<!--===============================================================================================-->	
-	<script src="vendor1/jquery/jquery-3.2.1.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor1/bootstrap/js/popper.js"></script>
-	<script src="vendor1/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
-	<script src="vendor1/select2/select2.min.js"></script>
 <!--===============================================================================================-->
 	<script src="vendor1/tilt/tilt.jquery.min.js"></script>
 	<script >

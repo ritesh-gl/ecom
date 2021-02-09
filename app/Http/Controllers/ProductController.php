@@ -36,7 +36,7 @@ class ProductController extends Controller
         
     }
 
-    function addToCart(Request $req)
+    function addToCart(Request $req)    
     {
        if($req->session()->has('user'))
        { 
@@ -152,7 +152,54 @@ class ProductController extends Controller
         return redirect('/');      
     }
 
+    function buyNow(Request $req )
+    {   
+        $userId=Session::get('user')['id'];
+        $id1=Session::put('pid',$req->product_id);
+       $data= Product::find($req->product_id);
+        $qtn=Session::put('qtn',$req->quant);
+        $leftqn=$data['quantity']-$qtn;
+        if($leftqn>=0)
+        {
+    return view('buyPlace',['total'=>$data->price]);
+}
+else{
+    echo '<script>alert("Not Enough Item in stock.\n Only '.$data['quantity'].' left.")</script>';
+    return view('detail',['products'=>$data]);
+
+} 
+
+
+    }
+
+    function buyPlace(Request $req)
+    {
+        $userId=Session::get('user')['id'];
+        $id=Session::get('pid');
+        $qtn=Session::get('qtn');
+        $data=Product::find($id);
+        $leftqn=$data['quantity']-$qtn;
+        
+        DB::table('products')
+        ->where('id', $id)  // find your user by their email
+        ->limit(1)  // optional - to ensure only one record is updated.
+        ->update(array('quantity' => $leftqn));  // update the record in the DB.
+       
+        $order=new orders;
+        $order->product_id=$id;
+        $order->user_id=$userId;
+        $order->status="pending";
+        $order->payment_method=$req->payment;
+        $order->payment_status="pending";
+        $order->address=$req->address;
+        $order->order_quantity=$qtn;
+        $order->save();
     
+        $req->input();
+        return redirect('/');  
+           
+    }
+
 
     function myOrders()
     {

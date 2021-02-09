@@ -48,17 +48,10 @@
      <input type="text" size=2 name="quant" id="TextBox" value="1" />
      <input type="button"  value="+"   id="add">
      </div>
-        <button class="btn btn-success">Add to Cart</button>
+        <button  class="btn btn-primary">Add to Cart</button>
 
-        </form>
-        <br>
-          <button class="btn btn-primary">Buy Now</button>
-
-
-
-
-
-
+          <button formaction="/buyNow" class="btn btn-success" >Buy Now</a>
+          </form>
         </div>      
     </div>
 </div>

@@ -6,6 +6,28 @@
 	    <div class="container">
 			<div class="wrapper">
 
+<script>
+$(function() {
+	if(localStorage.getItem('category')){
+        $('#ct').val(localStorage.getItem('category')).trigger('change');;
+    }
+	else {
+    $('#ct').change(function() {
+        localStorage.setItem('category', this.value);
+    });
+    if(localStorage.getItem('category')){
+        $('#ct').val(localStorage.getItem('category')).trigger('change');;
+    }
+}
+	$('#pr').change(function() {
+        localStorage.setItem('price', this.value);
+    });
+    if(localStorage.getItem('price')){
+        $('#pr').val(localStorage.getItem('price')).trigger('change');;
+    }
+});
+</script>
+
 			    <h1 class="text-center">E-Com </h1>
 			
 

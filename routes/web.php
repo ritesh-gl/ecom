@@ -18,7 +18,7 @@ Route::get('/logout', function () {
 });
 //Route::view('/register','register');
 Route::post("/login","UserController@login");
-//Route::post("/register","UserController@register");
+Route::post("/register","UserController@register");
 
 Route::get("/","ProductController@index");
 Route::get("detail/{id}","ProductController@detail");
@@ -30,6 +30,7 @@ Route::get("removeCart/{id}","ProductController@removeCart");
 Route::get("orderNow","ProductController@orderNow");
 Route::post("orderPlace","ProductController@orderPlace");
 Route::get("myOrders","ProductController@myOrders");
-//Route::view('products','allProduct');
 Route::get("products","ProductController@allProduct");
 Route::get("productCat","ProductController@proCat");
+Route::post("buyNow","ProductController@buyNow");
+Route::post("buyPlace","ProductController@buyPlace");
