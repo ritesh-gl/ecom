@@ -48,11 +48,16 @@ $(function() {
 					
 					    </div>
 					    
+						<div class="col-xs-6 col-sm-3">
+						
+					<input type="number" value="Paginate" name="paginate" min="1" placeholder="Paginate" size=8>
+
+						</div>
 				
 					<div class="col-sm-6 hidden-xs">
 						<div class="row">
 	
-							<div class="col-sm-4 pull-right">
+							<div class="col-sm-4">
 								<select name="pr">
 								    <option value="">Sort By Price</option>
 								    <option value="asc">Low to High</option>
@@ -60,10 +65,12 @@ $(function() {
 								    
 								</select>
 							</div>
-							
+							<input type="submit" value="Submit" class="btn btn-success">
 						</div>	
+						
 					</div>
-					<input type="submit" value="Submit" class="btn btn-success">
+					
+					
 				</form>
 			    </div>
 				{{$products->links()}}

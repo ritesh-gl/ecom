@@ -14,6 +14,8 @@ Route::get('/register', function () {
 
 Route::get('/logout', function () {
     Session::forget('user');
+    Session::forget('pgn');
+    
     return redirect('login');
 });
 //Route::view('/register','register');

@@ -18,6 +18,7 @@ class ProductController extends Controller
     function index()
     {
         $data=Product::all();
+        
         return view('product',['products'=>$data]);
     }
     
@@ -30,6 +31,8 @@ class ProductController extends Controller
 
     function search(Request $req)
     {
+
+       
         $data= Product::
        where('name','like','%'.$req->input('query').'%')->get() ;
        return view('search',['products'=>$data]);
@@ -40,6 +43,7 @@ class ProductController extends Controller
     {
        if($req->session()->has('user'))
        { 
+       
         $data=Product::find($req->product_id);
         $leftq= $data['quantity']-$req->quant;
 
@@ -62,6 +66,7 @@ class ProductController extends Controller
        {
            return redirect('/login');
        }
+    
     }
 
 
@@ -107,6 +112,7 @@ class ProductController extends Controller
 
     function orderPlace(Request $req)
     {
+     
         $userId=Session::get('user')['id'];
         $allcart=cart::where('user_id',$userId)->get();
         $products=DB::table('cart')
@@ -154,6 +160,8 @@ class ProductController extends Controller
 
     function buyNow(Request $req )
     {   
+       
+
         $userId=Session::get('user')['id'];
         $id1=Session::put('pid',$req->product_id);
        $data= Product::find($req->product_id);
@@ -174,6 +182,7 @@ else{
 
     function buyPlace(Request $req)
     {
+      
         $userId=Session::get('user')['id'];
         $id=Session::get('pid');
         $qtn=Session::get('qtn');
@@ -216,38 +225,55 @@ else{
 
     function allProduct()
     {
+        if(Session::get('pgn'))
+        $pg=Session::get('pgn');
+        else $pg=6;
+
         $data= Product::
-            paginate(6);
+            paginate($pg);
         return view('allProduct',['products'=>$data]);
 
     }
 
     function proCat(Request $req)
     {
+
+
         $cat=$req->ct;
         $price=$req->pr;
+        if($req->paginate)
+      { if($req->paginate<=0)
+        {
+            echo "<script>alert('Please enter valid pagination value!');</script>";
+        }
+        else {           $ss=Session::put('pgn',$req->paginate);
+            $pg=$req->paginate;
+    }
+    }
+else $pg=Session::get('pgn');
+
         // echo $price;
         // echo $cat;
         if($cat=="" && $price=="")
         {
             $data= Product::
-            paginate(6);
+            paginate($pg);
         }
         else if($cat=="" && $price!="")
         {
             $data= Product::
-            orderBy('price',$price)->paginate(6);
+            orderBy('price',$price)->paginate($pg);
         }
 
        else if($price=="" && $cat!="")
         { 
             $data= Product::
-            where('category','like',$cat)->paginate(6) ;
+            where('category','like',$cat)->paginate($pg);
         }
         else
         {
         $data= Product::
-        where('category','like',$cat)->orderBy('price',$price)->paginate(6) ;
+        where('category','like',$cat)->orderBy('price',$price)->paginate($pg) ;
         }
       return view('allProduct',['products'=>$data]);
 
