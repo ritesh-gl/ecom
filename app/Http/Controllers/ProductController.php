@@ -51,7 +51,7 @@ class ProductController extends Controller
            $cart->cart_quantity=$req->quant;
             $cart->save();
 
-            return redirect('/');
+            return redirect('/cartList');
         }
         else {
             echo '<script>alert("Not Enough Item in stock.\n Only '.$data['quantity'].' left.")</script>';
@@ -207,6 +207,7 @@ else{
         $orders= DB::table('orders')
         ->join('products','orders.product_id','=','products.id')
         ->where('orders.user_id',$userId)
+        ->select('products.*','orders.*')
         ->get();
        // $quant=cart::where('user_id',$userId)->get();
      return view('myorders',['orders'=>$orders]); 

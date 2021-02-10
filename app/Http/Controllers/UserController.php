@@ -28,9 +28,10 @@ class Usercontroller extends Controller
         $name=$req->name;
         $email=$req->email;
         $pass=$req->password;
+        $contact=$req->contact;
         $check= User::where(['email'=>$req->email])->first();
         if(!$check){
-        DB::insert('insert into users (name, email, password) values (?, ?, ?)', [$name, $email, Hash::make($pass)]);
+        DB::insert('insert into users (name, email, password, contact) values (?, ?, ?,?)', [$name, $email, Hash::make($pass),$contact]);
         return redirect('/login');
         }
         else {
