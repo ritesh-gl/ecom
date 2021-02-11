@@ -21,7 +21,16 @@
 		<form method="post" name="frm" action="register"  class="resgisteration" enctype="multipart/form-data">
     {{ csrf_field() }}
 			<h1>Registration Form</h1>
-
+  
+  @if ($errors->any())
+                <div class="alert alert-danger">
+              <ul>
+              @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+              </div>
+            @endif
 			<label for="employeeid">
 				<span>Email ID</span>
 
@@ -48,7 +57,7 @@
 			
 			
 			
-			<label for="department">
+			<!-- <label for="department">
 				<span>Gender</span>
 
 				<input type="text" name="Dept" placeholder="Gender" id="department">
@@ -57,7 +66,7 @@
 					<li>At least 2 characters long</li>
 					<li>Must only contain letters (no special characters)</li>
 				</ul>
-			</label>
+			</label> -->
 			
 			<label for="contact">
 				<span>Contact Number</span>

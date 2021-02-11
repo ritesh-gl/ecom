@@ -45,7 +45,7 @@
       
      <div class="col-sm-4">
      <input type="button" value="-"   id="rem">
-     <input type="text" size=2 name="quant" id="TextBox" value="1" />
+     <input type="number" size=2 name="quant" id="TextBox" value="1" max="{{$products['quantity']}}" />
      <input type="button"  value="+"   id="add">
      </div>
         <button  class="btn btn-primary">Add to Cart</button>

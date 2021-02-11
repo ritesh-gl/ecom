@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation;
 use Illuminate\Http\Request;
 use App\Product;
 use App\cart;
@@ -160,8 +163,9 @@ class ProductController extends Controller
 
     function buyNow(Request $req )
     {   
+        if($req->session()->has('user'))
+        { 
        
-
         $userId=Session::get('user')['id'];
         $id1=Session::put('pid',$req->product_id);
        $data= Product::find($req->product_id);
@@ -176,17 +180,30 @@ else{
     return view('detail',['products'=>$data]);
 
 } 
-
+        }
+        else
+        {
+            return redirect('/login');
+        }
 
     }
 
     function buyPlace(Request $req)
-    {
-      
-        $userId=Session::get('user')['id'];
-        $id=Session::get('pid');
-        $qtn=Session::get('qtn');
+    { $id=Session::get('pid');
         $data=Product::find($id);
+        $validated = Validator::make($req->all(), [
+            'payment' => 'required',
+            'address' => 'required',
+        ]);
+        if($validated->fails())
+        {
+             return view('buyPlace',['errors'=>$validated->errors(),'total'=>$data->price]);
+
+        }
+        else {
+        $userId=Session::get('user')['id'];
+       
+        $qtn=Session::get('qtn');
         $leftqn=$data['quantity']-$qtn;
         
         DB::table('products')
@@ -206,7 +223,7 @@ else{
     
         $req->input();
         return redirect('/');  
-           
+        }
     }
 
 
@@ -241,8 +258,10 @@ else{
 
         $cat=$req->ct;
         $price=$req->pr;
+        
         if($req->paginate)
-      { if($req->paginate<=0)
+      {
+           if($req->paginate<=0)
         {
             echo "<script>alert('Please enter valid pagination value!');</script>";
         }

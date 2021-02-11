@@ -58,7 +58,15 @@
 					<span class="login100-form-title">
 					 Login
 					</span>
-
+                @if ($errors->any())
+                <div class="alert alert-danger">
+              <ul>
+              @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+              </div>
+            @endif
 					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
           <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
 						<span class="focus-input100"></span>

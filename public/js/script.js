@@ -95,23 +95,23 @@ var empnameValidityChecks = [
 ];
 
 
-var departmentValidityChecks = [
-	{
-		isInvalid: function(input) {
-			return input.value.length < 2;
-		},
-		invalidityMessage: 'This input needs to be at least 2 characters',
-		element: document.querySelector('label[for="department"] .input-requirements li:nth-child(1)')
-	},
-	{
-		isInvalid: function(input) {
-			var illegalCharacters = input.value.match(/[^a-zA-Z]/g);
-			return illegalCharacters ? true : false;
-		},
-		invalidityMessage: 'Only letters and numbers are allowed',
-		element: document.querySelector('label[for="department"] .input-requirements li:nth-child(2)')
-	}
-];
+// var departmentValidityChecks = [
+// 	{
+// 		isInvalid: function(input) {
+// 			return input.value.length < 2;
+// 		},
+// 		invalidityMessage: 'This input needs to be at least 2 characters',
+// 		element: document.querySelector('label[for="department"] .input-requirements li:nth-child(1)')
+// 	},
+// 	{
+// 		isInvalid: function(input) {
+// 			var illegalCharacters = input.value.match(/[^a-zA-Z]/g);
+// 			return illegalCharacters ? true : false;
+// 		},
+// 		invalidityMessage: 'Only letters and numbers are allowed',
+// 		element: document.querySelector('label[for="department"] .input-requirements li:nth-child(2)')
+// 	}
+// ];
 
 
 var contactValidityChecks = [
@@ -219,7 +219,7 @@ function checkInput(input) {
 
 var usernameInput = document.getElementById('employeeid');
 var empnameInput = document.getElementById('empname');
-var departmentInput = document.getElementById('department');
+// var departmentInput = document.getElementById('department');
 var contactInput = document.getElementById('contact');
 var passwordInput = document.getElementById('password');
 var passwordRepeatInput = document.getElementById('password_repeat');
@@ -230,8 +230,8 @@ usernameInput.CustomValidation.validityChecks = employeeidValidityChecks;
 empnameInput.CustomValidation = new CustomValidation();
 empnameInput.CustomValidation.validityChecks = empnameValidityChecks;
 
-departmentInput.CustomValidation = new CustomValidation();
-departmentInput.CustomValidation.validityChecks = departmentValidityChecks;
+// departmentInput.CustomValidation = new CustomValidation();
+// departmentInput.CustomValidation.validityChecks = departmentValidityChecks;
 
 contactInput.CustomValidation = new CustomValidation();
 contactInput.CustomValidation.validityChecks = contactValidityChecks;

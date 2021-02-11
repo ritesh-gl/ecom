@@ -9,6 +9,9 @@ Route::get('/login', function () {
 });
 
 Route::get('/register', function () {
+    if(Session::get('user')['id'])
+    return redirect('/');
+    else 
     return view('register');
 });
 
