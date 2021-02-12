@@ -251,28 +251,45 @@ function buyNow(Request $req )
 
     }
 
-    function proCat(Request $req)
-    {
-
-
-        $cat=$req->ct;
-        $price=$req->pr;
-        
-        if($req->paginate)
-      {
-           if($req->paginate<=0)
+function proCat(Request $req)
+ { 
+        if($req->ct)
         {
-            echo "<script>alert('Please enter valid pagination value!');</script>";
+            $s1=Session::put('ct',$req->ct);
+            $cat=$req->ct;
         }
-        else {           $ss=Session::put('pgn',$req->paginate);
-            $pg=$req->paginate;
-    }
-    }
-else $pg=Session::get('pgn');
+        else 
+        $cat=Session::get('ct');
+        
+        if($req->pr)
+        {
+            $s2=Session::put('pr',$req->pr);
+            $price=$req->pr;
+        }
+        else 
+        $price=Session::get('pr');
+       
+        if($req->paginate)
+        {
+           if($req->paginate<=0)
+            {
+                echo "<script>alert('Please enter valid pagination value!');</script>";
+            }
+            else 
+            {           
+               $ss=Session::put('pgn',$req->paginate);
+               $pg=$req->paginate;
+            }
+        }
+        else 
+        $pg=Session::get('pgn');
 
-        // echo $price;
-        // echo $cat;
-        if($cat=="" && $price=="")
+        if($cat=="all")
+        {
+            $data= Product::
+            paginate($pg);
+        }
+        else if($cat=="" && $price=="")
         {
             $data= Product::
             paginate($pg);
@@ -283,20 +300,16 @@ else $pg=Session::get('pgn');
             orderBy('price',$price)->paginate($pg);
         }
 
-       else if($price=="" && $cat!="")
+       else if($price=="" && $cat!="" )
         { 
             $data= Product::
             where('category','like',$cat)->paginate($pg);
         }
         else
         {
-        $data= Product::
-        where('category','like',$cat)->orderBy('price',$price)->paginate($pg) ;
+            $data= Product::
+            where('category','like',$cat)->orderBy('price',$price)->paginate($pg) ;
         }
       return view('allProduct',['products'=>$data]);
-
     }
-
-  
-
 }

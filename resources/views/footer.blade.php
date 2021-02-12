@@ -1,4 +1,4 @@
-<div style="clear:both" class="panel panel-default">
+<!-- <div style="clear:both" class="panel panel-default">
   <div class="panel-body">
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
@@ -6,7 +6,7 @@
 <!------ Include the above in your HEAD tag ---------->
 
 <footer>
-<div style="min-height: 250px;" class="footer" id="footer-sub">
+<div style="min-height: 250px " class="footer" id="footer-sub">
     <div class="container">
         <div class="row">
             <div class="col-md-4">
@@ -219,4 +219,4 @@ margin-left: -38px;
 </div>
 
 </div></div>
-</div>
+</div> -->

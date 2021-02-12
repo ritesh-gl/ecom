@@ -39,7 +39,7 @@ class displayProduct extends Command
      */
     public function handle()
     {
-        DB::table('cart')
-        ->delete();
+       print_r(Product::get());
+        
     }
 }

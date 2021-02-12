@@ -26,4 +26,11 @@ class User extends Authenticatable
     protected $hidden = [
          'remember_token',
     ];
+
+    public function findByEmail($req)
+    {
+
+       return User::where(['email'=>$req->email])->first();
+
+    }
 }

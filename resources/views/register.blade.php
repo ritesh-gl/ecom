@@ -59,9 +59,7 @@
 			
 			<!-- <label for="department">
 				<span>Gender</span>
-
 				<input type="text" name="Dept" placeholder="Gender" id="department">
-
 				<ul class="input-requirements">
 					<li>At least 2 characters long</li>
 					<li>Must only contain letters (no special characters)</li>

@@ -36,6 +36,7 @@ $total=ProductController::cartItem();
       <ul class="nav navbar-nav navbar-right">
       <li><a href="/products" >All Products </a></li>
         <li><a href="/cartList">Cart({{$total}})</a></li>
+        
         @if(Session::has('user'))
         <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{Session::get('user')['name']}}

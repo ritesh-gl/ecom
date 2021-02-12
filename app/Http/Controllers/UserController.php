@@ -10,22 +10,30 @@ use Illuminate\Validation;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use App\User;
+use App\Http\Requests\UserLoginRequest;
+use App\Http\Requests\UserRegisterRequest;
+
 
 class Usercontroller extends Controller
 {
-    function login(Request $req)
+    function login(UserLoginRequest $req)
     {
-        $validated = Validator::make($req->all(), [
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-        if($validated->fails())
-        {
-             return view('login',['errors'=>$validated->errors()]);
+        // $validated = Validator::make($req->all(), [
+        //     'email' => 'required|email',
+        //     'password' => 'required',
+        // ]);
+        // if($validated->fails())
+        // {
+        //      return view('login',['errors'=>$validated->errors()]);
 
-        }
-        else {
-        $user= User::where(['email'=>$req->email])->first();
+        // }
+        // else {
+            $userobj=new User();
+           
+
+        $user= $userobj->findByEmail($req);
+        
+
         if(!$user || !Hash::check($req->password,$user->password))
         {
             echo '<script>alert("User does not exits!")</script>';
@@ -35,24 +43,24 @@ class Usercontroller extends Controller
             $req->session()->put('user',$user);
             return redirect('/');
             }
-        }   
+        //}   
     }
 
-    function register(request $req)
+    function register(UserRegisterRequest $req)
     {
-        $validated = Validator::make($req->all(), [
-            'email' => 'required|email',
-            'name' =>'required',
-            'contact'=>'required',
-            'password' => 'required',
-            'password_repeat'=>'required'
-        ]);
-        if($validated->fails())
-        {
-            //echo "error";
-            return view('register',['errors'=>$validated->errors()]);
-        }
-        else {
+        // $validated = Validator::make($req->all(), [
+        //     'email' => 'required|email',
+        //     'name' =>'required',
+        //     'contact'=>'required',
+        //     'password' => 'required',
+        //     'password_repeat'=>'required'
+        // ]);
+        // if($validated->fails())
+        // {
+        //     //echo "error";
+        //     return view('register',['errors'=>$validated->errors()]);
+        // }
+        // else {
             $name=$req->name;
             $email=$req->email;
             $pass=$req->password;
@@ -65,7 +73,7 @@ class Usercontroller extends Controller
             else {
             echo "User already exists. <a href='/login'> Click here </a> to login." ;
             }
-        }
+       // }
     $req->input();
 }
 }

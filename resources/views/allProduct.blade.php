@@ -12,6 +12,7 @@ $(function() {
         $('#ct').val(localStorage.getItem('category')).trigger('change');;
     }
 	else {
+		
     $('#ct').change(function() {
         localStorage.setItem('category', this.value);
     });
@@ -28,8 +29,8 @@ $(function() {
 });
 </script>
 
-			    <h1 class="text-center">E-Com </h1>
-			
+			    <!-- <h1 class="text-center">E-Com </h1>
+			 -->
 
 			    <div class="row">
                 <div class="col-xs-6 col-sm-3">
@@ -42,8 +43,8 @@ $(function() {
 							    <option value="washing machine">Washing Machine</option>
 							    <option value="watch">Watch</option>
 							    <option value="tv">Tv</option>
-							    <option value="printer">printer</option>
-								
+							    <option value="printer">Printer</option>
+								<option value="all">All</option>
 							</select>
 					
 					    </div>

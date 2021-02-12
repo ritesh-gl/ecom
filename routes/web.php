@@ -18,6 +18,8 @@ Route::get('/register', function () {
 Route::get('/logout', function () {
     Session::forget('user');
     Session::forget('pgn');
+    Session::forget('ct');
+    Session::forget('pr');
     
     return redirect('login');
 });
