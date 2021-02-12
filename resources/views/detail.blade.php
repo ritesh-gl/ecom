@@ -45,14 +45,17 @@
       
      <div class="col-sm-4">
      <input type="button" value="-"   id="rem">
-     <input type="number" size=2 name="quant" id="TextBox" value="1" max="{{$products['quantity']}}" />
+     <input type="number" style="width: 4em" name="quant" id="TextBox" value="1" max="{{$products['quantity']}}" />
      <input type="button"  value="+"   id="add">
      </div>
         <button  class="btn btn-primary">Add to Cart</button>
 
           <button formaction="/buyNow" class="btn btn-success" >Buy Now</a>
+         
           </form>
-        </div>      
+        </div>  
+         <div>
+         </div>   
     </div>
 </div>
 

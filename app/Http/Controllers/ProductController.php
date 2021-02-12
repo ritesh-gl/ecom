@@ -56,6 +56,7 @@ class ProductController extends Controller
            $cart->user_id=$req->session()->get('user')['id'];
            $cart->product_id=$req->product_id;
            $cart->cart_quantity=$req->quant;
+           $cart->item_price=$data['price'];
             $cart->save();
 
             return redirect('/cartList');
@@ -104,13 +105,13 @@ class ProductController extends Controller
     function orderNow()
     {   
         $userId=Session::get('user')['id'];
-       $total= DB::table('cart')
-       ->join('products','cart.product_id','=','products.id')
-       ->where('cart.user_id',$userId)
-    ->sum('products.price');
-
-    return view('ordernow',['total'=>$total]);
-
+        $allcart=cart::where('user_id',$userId)->get();
+        $total_sum=0;
+        foreach($allcart as $cart)
+        {
+            $total_sum=$total_sum+($cart['cart_quantity']*$cart['item_price']);
+        }
+      return view('ordernow',['total'=>$total_sum]);
     }
 
     function orderPlace(Request $req)
@@ -161,32 +162,32 @@ class ProductController extends Controller
         return redirect('/');      
     }
 
-    function buyNow(Request $req )
-    {   
-        if($req->session()->has('user'))
-        { 
+function buyNow(Request $req )
+{   
+    if($req->session()->has('user'))
+    { 
        
         $userId=Session::get('user')['id'];
         $id1=Session::put('pid',$req->product_id);
-       $data= Product::find($req->product_id);
+        $data=Product::find($req->product_id);
         $qtn=Session::put('qtn',$req->quant);
-        $leftqn=$data['quantity']-$qtn;
+        $leftqn=$data['quantity']-$req->quant;
         if($leftqn>=0)
         {
-    return view('buyPlace',['total'=>$data->price]);
-}
-else{
-    echo '<script>alert("Not Enough Item in stock.\n Only '.$data['quantity'].' left.")</script>';
-    return view('detail',['products'=>$data]);
-
-} 
+            $tot=$data['price']*$req->quant;
+            return view('buyPlace',['total'=>$tot]);
         }
-        else
-        {
-            return redirect('/login');
-        }
-
+        else{
+            echo '<script>alert("Not Enough Item in stock.\n Only '.$data['quantity'].' left.")</script>';
+            return view('detail',['products'=>$data]);
+        } 
     }
+    else
+    {
+       return redirect('/login');
+    }
+
+}
 
     function buyPlace(Request $req)
     { $id=Session::get('pid');
@@ -198,11 +199,9 @@ else{
         if($validated->fails())
         {
              return view('buyPlace',['errors'=>$validated->errors(),'total'=>$data->price]);
-
         }
         else {
         $userId=Session::get('user')['id'];
-       
         $qtn=Session::get('qtn');
         $leftqn=$data['quantity']-$qtn;
         
