@@ -20,7 +20,7 @@
         
         <input type="hidden" name="product_id" value="{{$products['id']}}">
         {{ csrf_field() }}
-        <script>
+        <!-- <script>
   $(document).ready(function(){
         //var counter = $('#TextBox').val();
         $('#add').click( function() {
@@ -35,18 +35,28 @@
               $('#TextBox').val(0);
             }
             else
+            if(counter>0)
             counter-- ;
 
             $('#TextBox').val(counter);
     });
 });
-     </script>
+     </script> -->
    
-      
+      <?php 
+      if($products['quantity']==0)
+      {
+        ?>
+        <script> alert ("No item left");
+        window.location = '/products';
+         </script>
+        <?php
+      }
+      ?>
      <div class="col-sm-4">
-     <input type="button" value="-"   id="rem">
-     <input type="number" style="width: 4em" name="quant" id="TextBox" value="1" max="{{$products['quantity']}}" />
-     <input type="button"  value="+"   id="add">
+     <!-- <input type="button" value="-"   id="rem"> -->
+     <input type="number" style="width: 4em" name="quant" id="TextBox" value="1" min=1 max="{{$products['quantity']}}" />
+     <!-- <input type="button"  value="+"   id="add"> -->
      </div>
         <button  class="btn btn-primary">Add to Cart</button>
 

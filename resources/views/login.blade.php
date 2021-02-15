@@ -58,7 +58,7 @@
 					<span class="login100-form-title">
 					 Login
 					</span>
-					<h1>{{sizeof($errors)}}</h1>
+					
                 @if ($errors->any())
                 <div class="alert alert-danger">
               <ul>

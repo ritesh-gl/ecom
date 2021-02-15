@@ -20,7 +20,9 @@ class ProductController extends Controller
     //
     function index()
     {
-        $data=Product::all();
+        $probj=new Product();
+ 
+        $data=$probj->allPr();
         
         return view('product',['products'=>$data]);
     }
@@ -28,16 +30,26 @@ class ProductController extends Controller
 
     function detail($id)
     {
-        $data=Product::find($id);
+        $probj=new Product();
+        $data=$probj->detail($id);
+        if($data['quantity']==0)
+        {
+            return redirect('/products');
+            echo '<script>alert("Not Enough Item in stock.");
+            window.location = /products;
+            </script>';
+            
+        }
+        else{
         return view('detail',['products'=>$data]);
+        }
     }
 
     function search(Request $req)
     {
-
+        $probj=new Product();
        
-        $data= Product::
-       where('name','like','%'.$req->input('query').'%')->get() ;
+        $data= $probj->search($req);
        return view('search',['products'=>$data]);
         
     }
@@ -46,19 +58,16 @@ class ProductController extends Controller
     {
        if($req->session()->has('user'))
        { 
+        
+        $probj=new Product();
+        $data=$probj->detail($req->product_id);
        
-        $data=Product::find($req->product_id);
         $leftq= $data['quantity']-$req->quant;
 
         if($leftq>=0)
         {
         $cart=new cart;
-           $cart->user_id=$req->session()->get('user')['id'];
-           $cart->product_id=$req->product_id;
-           $cart->cart_quantity=$req->quant;
-           $cart->item_price=$data['price'];
-            $cart->save();
-
+        $cart=$cart->saveVal($req,$data);
             return redirect('/cartList');
         }
         else {
@@ -73,26 +82,20 @@ class ProductController extends Controller
     
     }
 
-
     static function cartItem()
     {
         $userid=Session::get('user')['id'];
-        return cart::where('user_id',$userid)->count();
+        $cart=new cart;
+        return $cart->num($userid);
     }
 
     function cartList()
     {   
         $userId=Session::get('user')['id'];
-       $products=DB::table('cart')
-       ->join('products','cart.product_id','=','products.id')
-       ->where('cart.user_id',$userId)
-    ->select('products.*','cart.*','cart.id as cart_id')
-    ->get();
+        $cart=new cart;
+       $products=$cart->cartList($userId);
 
-    
-    
-
-    return view('cartList',['products'=>$products]);
+     return view('cartList',['products'=>$products]);
 
     }
 
@@ -105,7 +108,8 @@ class ProductController extends Controller
     function orderNow()
     {   
         $userId=Session::get('user')['id'];
-        $allcart=cart::where('user_id',$userId)->get();
+        $cart=new cart;
+        $allcart=$cart->orderNow($userId);
         $total_sum=0;
         foreach($allcart as $cart)
         {
@@ -118,46 +122,8 @@ class ProductController extends Controller
     {
      
         $userId=Session::get('user')['id'];
-        $allcart=cart::where('user_id',$userId)->get();
-        $products=DB::table('cart')
-        ->join('products','cart.product_id','=','products.id')
-        ->where('cart.user_id',$userId)
-     ->select('products.*','cart.*','cart.id as cart_id')
-     ->get();
-     
-      foreach ($products as $item)
-      {
-          
-        $leftqn=$item->quantity-$item->cart_quantity;
-        //echo $item->quantity;
-
-        DB::table('products')
-        ->where('id', $item->product_id)  // find your user by their email
-        ->limit(1)  // optional - to ensure only one record is updated.
-        ->update(array('quantity' => $leftqn));  // update the record in the DB.
-       
-             
-    }
-    
-        foreach($allcart as $cart)
-        {
-            $order=new orders;
-            $order->product_id=$cart['product_id'];
-            $order->user_id=$cart['user_id'];
-            $order->status="pending";
-            $order->payment_method=$req->payment;
-            $order->payment_status="pending";
-            $order->payment_method=$req->payment;
-            $order->address=$req->address;
-            $order->order_quantity=$cart['cart_quantity'];
-            $order->save();
-            $allcart= DB::table('cart')
-            ->orderBy('id')
-            ->limit(1)
-            ->delete();
-           // $allcart=cart::where('user_id',$userId)->delete();
-
-        }
+        $cart=new cart;
+        $cart->orderPlace($userId,$req);
         $req->input();
         return redirect('/');      
     }
@@ -201,25 +167,13 @@ function buyNow(Request $req )
              return view('buyPlace',['errors'=>$validated->errors(),'total'=>$data->price]);
         }
         else {
+
+
         $userId=Session::get('user')['id'];
         $qtn=Session::get('qtn');
         $leftqn=$data['quantity']-$qtn;
-        
-        DB::table('products')
-        ->where('id', $id)  // find your user by their email
-        ->limit(1)  // optional - to ensure only one record is updated.
-        ->update(array('quantity' => $leftqn));  // update the record in the DB.
-       
-        $order=new orders;
-        $order->product_id=$id;
-        $order->user_id=$userId;
-        $order->status="pending";
-        $order->payment_method=$req->payment;
-        $order->payment_status="pending";
-        $order->address=$req->address;
-        $order->order_quantity=$qtn;
-        $order->save();
-    
+        $probj=new Product();
+        $probj->buyPlace($id,$leftqn,$userId,$req,$qtn);
         $req->input();
         return redirect('/');  
         }
@@ -229,12 +183,9 @@ function buyNow(Request $req )
     function myOrders()
     {
         $userId=Session::get('user')['id'];
-        $orders= DB::table('orders')
-        ->join('products','orders.product_id','=','products.id')
-        ->where('orders.user_id',$userId)
-        ->select('products.*','orders.*')
-        ->get();
-       // $quant=cart::where('user_id',$userId)->get();
+        $ordobj=new orders();
+        $orders=$ordobj->myOrders($userId);
+        $quant=cart::where('user_id',$userId)->get();
      return view('myorders',['orders'=>$orders]); 
     }
 
