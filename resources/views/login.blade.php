@@ -7,7 +7,6 @@
 <form action="login" method="post">
 {{ csrf_field() }}
   <div class="form-group">
-
     <label for="exampleInputEmail1">Email address</label>
     <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
   </div>
@@ -20,7 +19,6 @@
 </form>
 </div>
 </div>
-
 </div> -->
 
 

@@ -28,6 +28,7 @@ Route::post("/login","UserController@login");
 Route::post("/register","UserController@register");
 
 Route::get("/","ProductController@index");
+
 Route::get("detail/{id}","ProductController@detail");
 Route::get("search","ProductController@search");
 Route::post("add_to_cart","ProductController@addToCart");

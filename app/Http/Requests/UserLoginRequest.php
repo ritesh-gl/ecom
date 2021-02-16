@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Http\Requests;
-
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
+use Waavi\Sanitizer\Laravel\SanitizesInput;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserLoginRequest extends FormRequest
@@ -28,11 +31,11 @@ class UserLoginRequest extends FormRequest
             'password' => 'required',
         ];
     }
-       /**
-     * Custom message for validation
-     *
-     * @return array
-     */
+    //    /**
+    //  * Custom message for validation
+    //  *
+    //  * @return array
+    //  */
     public function messages()
     {
         return [
