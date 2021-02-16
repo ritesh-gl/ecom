@@ -24,11 +24,24 @@ class UserRegisterRequest extends FormRequest
     public function rules()
     {
         return [
-                 'email' => 'required|email',
+            'email' => 'required|email',
             'name' =>'required',
             'contact'=>'required',
             'password' => 'required',
-            'password_repeat'=>'required'
+            'password_repeat'=>'required',
+        ];
+    }
+
+    /**
+     * Custom message for validation
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'email.required' => 'Email is required!',
+            'password.required' => 'Password is required!'
         ];
     }
 }

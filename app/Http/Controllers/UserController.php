@@ -61,17 +61,17 @@ class Usercontroller extends Controller
         //     return view('register',['errors'=>$validated->errors()]);
         // }
         // else {
-            $name=$req->name;
-            $email=$req->email;
-            $pass=$req->password;
-            $contact=$req->contact;
-            $check= User::where(['email'=>$req->email])->first();
-            if(!$check){
-            DB::insert('insert into users (name, email, password, contact) values (?, ?, ?,?)', [$name, $email, Hash::make($pass),$contact]);
-            return redirect('/login');
+          
+            $userobj=new User();
+            $user= $userobj->findByEmail($req);
+            
+            if(!$user){
+                $userobj->rsave($req);
+           
+           return redirect('/login');
             }
             else {
-            echo "User already exists. <a href='/login'> Click here </a> to login." ;
+            echo '<script> alert ("user already exists.");  window.location="/login" </script>' ;
             }
        // }
     $req->input();

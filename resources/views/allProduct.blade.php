@@ -66,7 +66,7 @@ $(function() {
 								    
 								</select>
 							</div>
-							<input type="submit" value="Submit" class="btn btn-success">
+							<input type="submit" value="Submit" class="btn btn-primary">
 						</div>	
 						
 					</div>

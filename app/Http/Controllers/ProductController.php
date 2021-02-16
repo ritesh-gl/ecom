@@ -9,15 +9,11 @@ use Illuminate\Http\Request;
 use App\Product;
 use App\cart;
 use App\orders;
-
 use Session;
 use Illuminate\Support\Facades\DB;
 
-
-
 class ProductController extends Controller
 {
-    //
     function index()
     {
         $probj=new Product();
@@ -32,17 +28,7 @@ class ProductController extends Controller
     {
         $probj=new Product();
         $data=$probj->detail($id);
-        if($data['quantity']==0)
-        {
-            return redirect('/products');
-            echo '<script>alert("Not Enough Item in stock.");
-            window.location = /products;
-            </script>';
-            
-        }
-        else{
         return view('detail',['products'=>$data]);
-        }
     }
 
     function search(Request $req)

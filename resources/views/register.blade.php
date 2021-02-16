@@ -96,7 +96,7 @@
 
 			<label for="password_repeat">
 				<span>Confirm Password</span>
-				<input type="password" name="cpass" id="password_repeat" placeholder="Confirm Password" required="required"/>
+				<input type="password" name="password_repeat" id="password_repeat" placeholder="Confirm Password" required="required"/>
 			</label>
 
 			

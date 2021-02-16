@@ -6,7 +6,7 @@
 <!------ Include the above in your HEAD tag ---------->
 
 <footer>
-<div style="min-height: 250px " class="footer" id="footer-sub">
+<div style="min-height: 250px  " class="footer" id="footer-sub">
     <div class="container">
         <div class="row">
             <div class="col-md-4">

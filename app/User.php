@@ -4,10 +4,12 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    public $timestamps=true;
 
     /**
      * The attributes that are mass assignable.
@@ -32,5 +34,15 @@ class User extends Authenticatable
 
        return User::where(['email'=>$req->email])->first();
 
+    }
+
+    public function rsave($req)
+    {
+        $userobj=new User();
+        $userobj->name=$req->name;
+           $userobj->email=$req->email;
+           $userobj->password=Hash::make($req->password);
+           $userobj->contact=$req->contact;;
+           $userobj->save();
     }
 }
